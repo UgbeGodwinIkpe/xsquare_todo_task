@@ -8,7 +8,7 @@ const addTodoValidation = Joi.object().keys({
 });
 
 const todoIdValidation = Joi.object().keys({
-    todoId: Joi.string().required().label('Todo Id'),
+    id: Joi.string().required().label('Todo Id'),
 });
 
 

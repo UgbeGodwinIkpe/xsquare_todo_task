@@ -22,21 +22,20 @@ const addTodo = async(req, res, next) => {
 };
 
 const updateTodo = async(req, res, next) => {
-    transaction = await Transaction.startSession();
     try {
         const {
             title,
             description,
             completed,
         } = await todoValidation.updateTodoValidation.validateAsync(req.body);
-        const { todoId } = await todoValidation.todoIdValidation.validateAsync(req.params);
+        const { id } = await todoValidation.todoIdValidation.validateAsync(req.params);
         await todoServices.updateTheTodo({
-            todoId,
+            id,
             title,
             description,
             completed,
         });
-        return res.status(200).send({ msg: "Successfully updated", Todo: todo });
+        return res.status(200).send({ msg: "Successfully updated" });
     } catch (err) {
         return res.status(409).send({ error: err });
     }
@@ -46,9 +45,10 @@ const updateTodo = async(req, res, next) => {
 // Delete by todo id
 const deleteTodoById = async(req, res, next) => {
     try {
-        const id = await todoValidation.todoIdValidation.validateAsync(req.params.id);
+        const { id } = await todoValidation.todoIdValidation.validateAsync(req.params);
+        console.log(id);
         // check user exits or not
-        const todo = await todoServices.deleteTodotById({ id });
+        const todo = await todoServices.deleteTodoById({ id });
         if (!todo) {
             throw error.throwNotFound({ message: 'Todo' });
         }
@@ -59,9 +59,18 @@ const deleteTodoById = async(req, res, next) => {
 };
 const getTodo = async(req, res, next) => {
     try {
-        const { todoId } = await todoValidation.todoIdValidation.validateAsync(req.query);
-        const todo = await todoServices.getTodo({ todoId });
-        return res.status(200).send({ msg: "Successfully updated", Todo: todo });
+        const { id } = await todoValidation.todoIdValidation.validateAsync(req.params);
+        const todo = await todoServices.getTodo({ id });
+        return res.status(200).send({ msg: "Successfully fetched", Todo: todo });
+
+    } catch (err) {
+        return res.status(409).send({ error: err });
+    }
+}
+const getTodos = async(req, res, next) => {
+    try {
+        const todos = await todoServices.getTodo({});
+        return res.status(200).send({ msg: "Successfully fetched", Todo: todos });
 
     } catch (err) {
         return res.status(409).send({ error: err });
@@ -71,5 +80,6 @@ module.exports = {
     addTodo,
     updateTodo,
     deleteTodoById,
-    getTodo
+    getTodo,
+    getTodos
 };

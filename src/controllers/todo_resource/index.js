@@ -2,12 +2,14 @@ const {
     addTodo,
     updateTodo,
     deleteTodoById,
-    getTodo
+    getTodo,
+    getTodos
 } = require('./todo.controllers');
 
 module.exports = {
     addTodo,
     updateTodo,
     deleteTodoById,
-    getTodo
+    getTodo,
+    getTodos
 };

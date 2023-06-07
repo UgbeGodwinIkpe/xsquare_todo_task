@@ -1,16 +1,16 @@
 const { TodoModel } = require('../../models');
 
 
-// Fetching Todo
-const getTodo = async({ todoId}) => {
+// Fetching Todos
+const getTodo = async({ id }) => {
         let q = {};
-        if (todoId) {
-            q._id = todoId;
+        if (id) {
+            q._id = id;
         }
         return TodoModel.find(q);
     }
     // Deleting todo by todotId
-const deleteTodoById = async({ id }) => ProjectModel.findAndDeleteOne({ id });
+const deleteTodoById = async({ _id }) => TodoModel.findOneAndDelete({ _id });
 
 const createTodo = async({
     title,
@@ -23,15 +23,15 @@ const createTodo = async({
 });
 
 const updateTheTodo = async({
-    todoId,
+    id,
     title,
     description,
     completed,
 }) => TodoModel.findByIdAndUpdate(
-    todoId, {
+    id, {
         title,
-    description,
-    completed,
+        description,
+        completed,
     }, { returnedDocument: 'after' },
 );
 
