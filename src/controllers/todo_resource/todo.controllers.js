@@ -46,13 +46,13 @@ const updateTodo = async(req, res, next) => {
 const deleteTodoById = async(req, res, next) => {
     try {
         const { id } = await todoValidation.todoIdValidation.validateAsync(req.params);
-        console.log(id);
+
         // check user exits or not
         const todo = await todoServices.deleteTodoById({ id });
         if (!todo) {
-            throw error.throwNotFound({ message: 'Todo' });
+            throw res.status(404)({ Error: 'Todo not found.' });
         }
-        return WriteResult({ 'nRemoved': 1 })
+        return res.status(200).send({ msg: "1 Todo has been updated." })
     } catch (err) {
         return res.status(409).send({ error: err });
     }

@@ -10,7 +10,14 @@ const getTodo = async({ id }) => {
         return TodoModel.find(q);
     }
     // Deleting todo by todotId
-const deleteTodoById = async({ _id }) => TodoModel.findOneAndDelete({ _id });
+const deleteTodoById = async({ id }) => {
+    let q = {};
+    if (id) {
+        q._id = id;
+        console.log(q);
+    }
+    return TodoModel.findOneAndDelete(q);
+}
 
 const createTodo = async({
     title,
