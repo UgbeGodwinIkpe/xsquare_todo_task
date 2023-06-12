@@ -10,6 +10,7 @@ npm i --save express mongoose dotenv joi nodemon
 
 # **Eassy Installation:**
 1. clone the repository:
+https://github.com/UgbeGodwinIkpe/xsquare_todo_task.git
 
 2. install the dependencies:
   nmp install
